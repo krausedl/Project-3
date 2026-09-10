@@ -2,7 +2,7 @@
 // update some of the imports for new file names
 import 'package:flutter/material.dart';
 import 'package:workout_tracker/objects/exercise.dart';
-import 'package:workout_tracker/widgets/to_do_items.dart';
+import 'package:workout_tracker/widgets/exercise_list_item.dart';
 import 'package:workout_tracker/widgets/to_do_dialog.dart';
 
 // swap out the old list stuff for new WorkoutList/WorkoutTracker stuff
@@ -19,43 +19,19 @@ class WorkoutList extends StatefulWidget {
 class _WorkoutListState extends State<WorkoutList> {
   final List<Exercise> items = [Exercise(name: "Push-ups", muscleGroup: MuscleGroup.chest)];
   
-  final _itemSet = <Exercise>{};
-
-  void _handleListChanged(Exercise item, bool completed) {
+  void _handleDeleteExercise(Exercise exercise) {
     setState(() {
-      // When a user changes what's in the list, you need
-      // to change _itemSet inside a setState call to
-      // trigger a rebuild.
-      // The framework then calls build, below,
-      // which updates the visual appearance of the app.
-
-      items.remove(item);
-      if (!completed) {
-        print("Completing");
-        _itemSet.add(item);
-        items.add(item);
-      } else {
-        print("Making Undone");
-        _itemSet.remove(item);
-        items.insert(0, item);
-      }
+      print("Deleting exercise");
+      items.remove(exercise);
     });
   }
 
-  void _handleDeleteItem(Exercise item) {
+  void _handleNewExercise(String exerciseText, MuscleGroup targetMuscle, TextEditingController textController) {
     setState(() {
-      print("Deleting item");
-      items.remove(item);
-    });
-  }
+      print("Adding new exercise");
 
-  void _handleNewItem(String itemText, MuscleGroup targetMuscle, TextEditingController textController) {
-    setState(() {
-      print("Adding new item");
-      // switch this from itemName to itemText 
-      // drop const bc we dont need it
-      Exercise item = Exercise(name: itemText, muscleGroup: targetMuscle);
-      items.insert(0, item);
+      Exercise exercise = Exercise(name: exerciseText, muscleGroup: targetMuscle);
+      items.insert(0, exercise);
       textController.clear();
     });
   }
@@ -68,12 +44,10 @@ class _WorkoutListState extends State<WorkoutList> {
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          children: items.map((item) {
-            return ToDoListItem(
-              item: item,
-              completed: _itemSet.contains(item),
-              onListChanged: _handleListChanged,
-              onDeleteItem: _handleDeleteItem,
+          children: items.map((exercise) {
+            return ExerciseListItem(
+              exercise: exercise,
+              onDeleteExercise: _handleDeleteExercise,
             );
           }).toList(),
         ),
@@ -83,7 +57,7 @@ class _WorkoutListState extends State<WorkoutList> {
               showDialog(
                   context: context,
                   builder: (_) {
-                    return ToDoDialog(onListAdded: _handleNewItem);
+                    return ToDoDialog(onListAdded: _handleNewExercise);
                   });
             }));
   }

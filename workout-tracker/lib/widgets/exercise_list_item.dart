@@ -6,7 +6,7 @@ typedef ExerciseRemovedCallback = Function(Exercise exercise);
 class ExerciseListItem extends StatefulWidget {
   ExerciseListItem(
       {required this.exercise,
-      required this.onDeleteItem})
+      required this.onDeleteExercise})
       : super(key: ObjectKey(exercise));
 
       @override
@@ -14,7 +14,7 @@ class ExerciseListItem extends StatefulWidget {
 
   final Exercise exercise;
   
-  final ExerciseRemovedCallback onDeleteItem;
+  final ExerciseRemovedCallback onDeleteExercise;
 }
 
 class _ExerciseListItemState extends State<ExerciseListItem> {
@@ -27,7 +27,7 @@ class _ExerciseListItemState extends State<ExerciseListItem> {
         });
       },
       onLongPress: () {
-              widget.onDeleteItem(widget.exercise);
+              widget.onDeleteExercise(widget.exercise);
             },
       leading: CircleAvatar(
         child: Text(widget.exercise.abbrev()),
