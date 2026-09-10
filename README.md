@@ -1,2 +1,2 @@
-# to-dont-list
-A broken list of things to do
+# workout-tracker
+a workout tracker that keeps track of exercise, rep count and maybe muscle group
