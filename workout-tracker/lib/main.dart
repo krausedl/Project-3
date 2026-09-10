@@ -1,24 +1,27 @@
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
+// update some of the imports for new file names
 import 'package:flutter/material.dart';
-import 'package:to_dont_list/objects/item.dart';
-import 'package:to_dont_list/widgets/to_do_items.dart';
-import 'package:to_dont_list/widgets/to_do_dialog.dart';
+import 'package:workout_tracker/objects/exercise.dart';
+import 'package:workout_tracker/widgets/to_do_items.dart';
+import 'package:workout_tracker/widgets/to_do_dialog.dart';
 
-class ToDoList extends StatefulWidget {
-  const ToDoList({super.key});
+// swap out the old list stuff for new WorkoutList/WorkoutTracker stuff
+class WorkoutList extends StatefulWidget {
+  const WorkoutList({super.key});
 
   @override
-  State createState() => _ToDoListState();
+  State createState() => _WorkoutListState();
 }
 
 // Stateful widgets always are paried with a state smth
 // type stf for stateful
 // type st for stateless
-class _ToDoListState extends State<ToDoList> {
-  final List<Item> items = [const Item(name: "add more todos")];
-  final _itemSet = <Item>{};
+class _WorkoutListState extends State<WorkoutList> {
+  final List<Exercise> items = [Exercise(name: "Push-ups", muscleGroup: MuscleGroup.chest)];
+  
+  final _itemSet = <Exercise>{};
 
-  void _handleListChanged(Item item, bool completed) {
+  void _handleListChanged(Exercise item, bool completed) {
     setState(() {
       // When a user changes what's in the list, you need
       // to change _itemSet inside a setState call to
@@ -39,19 +42,19 @@ class _ToDoListState extends State<ToDoList> {
     });
   }
 
-  void _handleDeleteItem(Item item) {
+  void _handleDeleteItem(Exercise item) {
     setState(() {
       print("Deleting item");
       items.remove(item);
     });
   }
 
-  void _handleNewItem(String itemText, TextEditingController textController) {
+  void _handleNewItem(String itemText, MuscleGroup targetMuscle, TextEditingController textController) {
     setState(() {
       print("Adding new item");
       // switch this from itemName to itemText 
       // drop const bc we dont need it
-      Item item = Item(name: itemText);
+      Exercise item = Exercise(name: itemText, muscleGroup: targetMuscle);
       items.insert(0, item);
       textController.clear();
     });
@@ -61,7 +64,7 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('To Do List'),
+          title: const Text('Workout Tracker'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -88,7 +91,7 @@ class _ToDoListState extends State<ToDoList> {
 
 void main() {
   runApp(const MaterialApp(
-    title: 'To Do List',
-    home: ToDoList(),
+    title: 'Workout Tracker',
+    home: WorkoutList(),
   ));
 }
