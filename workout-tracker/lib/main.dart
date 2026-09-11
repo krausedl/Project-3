@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_tracker/objects/exercise.dart';
 import 'package:workout_tracker/widgets/exercise_list_item.dart';
-import 'package:workout_tracker/widgets/to_do_dialog.dart';
+import 'package:workout_tracker/widgets/exercise_dialog.dart';
 
 // swap out the old list stuff for new WorkoutList/WorkoutTracker stuff
 class WorkoutList extends StatefulWidget {
@@ -57,7 +57,7 @@ class _WorkoutListState extends State<WorkoutList> {
               showDialog(
                   context: context,
                   builder: (_) {
-                    return ToDoDialog(onListAdded: _handleNewExercise);
+                    return ExerciseDialog(onListAdded: _handleNewExercise);
                   });
             }));
   }

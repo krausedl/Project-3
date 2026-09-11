@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:to_dont_list/main.dart';
-import 'package:to_dont_list/objects/item.dart';
-import 'package:to_dont_list/widgets/to_do_items.dart';
+import 'package:to_dont_list/objects/exercise.dart';
+import 'package:to_dont_list/widgets/exercise_list_items.dart';
 
 void main() {
   test('Item abbreviation is first letter', () {
