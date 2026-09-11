@@ -1,6 +1,7 @@
-##Workout Tracker
+## Workout Tracker
 a workout tracker that keeps track of exercise, a rep count and the targeted muscle group from that exercise
 
+This program is to help people that go to the gym and want to track their workouts on their phone.
 Instead of journaling and having to write out every exercise that you do on paper and keeping a notebook, this program helps the user to add workouts to a list while keeping track of the targeted muscle group and the rep count. 
 
 To get started:
