@@ -8,27 +8,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:to_dont_list/main.dart';
-import 'package:to_dont_list/objects/exercise.dart';
-import 'package:to_dont_list/widgets/exercise_list_items.dart';
+import 'package:workout_tracker/main.dart';
+import 'package:workout_tracker/objects/exercise.dart';
+import 'package:workout_tracker/widgets/exercise_list_item.dart';
 
 void main() {
-  test('Item abbreviation is first letter', () {
-    const item = Item(name: "add more todos");
-    expect(item.abbrev(), "a");
+  test('Exercise abbreviation is first letter', () {
+    Exercise exercise = Exercise(name: "add more exercises", muscleGroup: MuscleGroup.chest,);
+    expect(exercise.abbrev(), "a");
   });
+  // changed this text to work for exercises
+
   // doesnt follow naming convention because we shouldnt used the phrase "should be"
   // change the name to smth like 'Item abbreviation is first letter'
 
+
+  test('Reps increment increases reps by 1', () {
+    Exercise exercise = Exercise(name: "Push-ups", muscleGroup: MuscleGroup.chest);
+    exercise.increment();
+    expect(exercise.reps, 1);
+  });
+
   // Yes, you really need the MaterialApp and Scaffold
-  testWidgets('ToDoListItem has a text', (tester) async {
+  testWidgets('ExerciseListItem has a text', (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: ToDoListItem(
-                item: const Item(name: "test"),
-                completed: true,
-                onListChanged: (Item item, bool completed) {},
-                onDeleteItem: (Item item) {}))));
+            body: ExerciseListItem(
+                exercise: Exercise(name: "test", muscleGroup: MuscleGroup.back),
+                onDeleteExercise: (Exercise exercise) {}))));
     final textFinder = find.text('test');
 
     // Use the `findsOneWidget` matcher provided by flutter_test to verify
@@ -36,15 +43,30 @@ void main() {
     expect(textFinder, findsOneWidget);
   });
 
-  testWidgets('ToDoListItem has a Circle Avatar with abbreviation',
+  testWidgets('tapping increments reps', 
+      (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: ExerciseListItem(
+          exercise: Exercise(name: "test", muscleGroup: MuscleGroup.back),
+          onDeleteExercise: (Exercise exercise) {}
+      ))));
+      expect(find.text('0'), findsOneWidget);
+
+      await tester.tap(find.byType(ListTile));
+      await tester.pump();
+
+      expect(find.text('1'), findsOneWidget);
+  });
+
+  
+  testWidgets('ExerciseListItem has a Circle Avatar with abbreviation',
       (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: ToDoListItem(
-                item: const Item(name: "test"),
-                completed: true,
-                onListChanged: (Item item, bool completed) {},
-                onDeleteItem: (Item item) {}))));
+            body: ExerciseListItem(
+              exercise: Exercise(name: "test", muscleGroup: MuscleGroup.back),
+              onDeleteExercise: (Exercise exercise) {}))));
     final abbvFinder = find.text('t');
     final avatarFinder = find.byType(CircleAvatar);
 
@@ -54,20 +76,20 @@ void main() {
     // Use the `findsOneWidget` matcher provided by flutter_test to verify
     // that the Text widgets appear exactly once in the widget tree.
     expect(abbvFinder, findsOneWidget);
-    expect(circ.backgroundColor, Colors.black54);
     expect(ctext.data, "t");
   });
 
-  testWidgets('Default ToDoList has one item', (tester) async {
-    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+  testWidgets('Default ExerciseList has one item', (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: WorkoutList()));
 
-    final listItemFinder = find.byType(ToDoListItem);
+    final listExerciseFinder = find.byType(ExerciseListItem);
 
-    expect(listItemFinder, findsOneWidget);
+    expect(listExerciseFinder, findsOneWidget);
+    expect(find.text('0'), findsOneWidget);
   });
 
-  testWidgets('Clicking and Typing adds item to ToDoList', (tester) async {
-    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+  testWidgets('Clicking and Typing adds item to WorkoutList', (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: WorkoutList()));
 
     expect(find.byType(TextField), findsNothing);
 
@@ -83,7 +105,7 @@ void main() {
     await tester.pump();
     expect(find.text("hi"), findsOneWidget);
 
-    final listItemFinder = find.byType(ToDoListItem);
+    final listItemFinder = find.byType(ExerciseListItem);
 
     expect(listItemFinder, findsNWidgets(2));
   });
