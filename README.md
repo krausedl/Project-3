@@ -15,8 +15,8 @@ To get started:
 
 <img width="380" height="778" alt="Project3-3" src="https://github.com/user-attachments/assets/0672d12f-a2b0-4c90-9891-d0f9783340b1" />
 
-6. click the name of the exercise to add to the rep counter
+5. click the name of the exercise to add to the rep counter
 
 <img width="380" height="778" alt="Project3-5" src="https://github.com/user-attachments/assets/02f7ddf6-d5ca-49c5-a968-1ea7a8a68f82" />
 
-9. repeat 1 - 5 for each new exercise that you want to do
+6. repeat 1 - 5 for each new exercise that you want to do
