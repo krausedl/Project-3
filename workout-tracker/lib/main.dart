@@ -30,6 +30,7 @@ class _WorkoutListState extends State<WorkoutList> {
     setState(() {
       print("Adding new exercise");
 
+      // have to add those new parameter
       Exercise exercise = Exercise(name: exerciseText, muscleGroup: targetMuscle);
       items.insert(0, exercise);
       textController.clear();

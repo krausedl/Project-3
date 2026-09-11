@@ -31,7 +31,6 @@ class _ExerciseDialogState extends State<ExerciseDialog> {
     return AlertDialog(
       title: const Text('Exercise To Add'),
       content: Column(
-        // mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             onChanged: (value) {
@@ -42,6 +41,8 @@ class _ExerciseDialogState extends State<ExerciseDialog> {
             controller: _inputController,
             decoration: const InputDecoration(hintText: "type exercise name here"),
           ),
+          // setState() here updates the valueMuscle variable
+          // also hides the drop down, showing the sekleted muscle target
           DropdownButton<MuscleGroup>(
             value: valueMuscle,
             items: MuscleGroup.values.map((group) {

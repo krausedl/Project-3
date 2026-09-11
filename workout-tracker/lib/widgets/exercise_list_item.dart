@@ -3,6 +3,8 @@ import 'package:workout_tracker/objects/exercise.dart';
 
 typedef ExerciseRemovedCallback = Function(Exercise exercise);
 
+// has to be a stateful widget bc the rep count increments when the user taps it
+// setState() shows the updated rep count
 class ExerciseListItem extends StatefulWidget {
   ExerciseListItem(
       {required this.exercise,
@@ -23,6 +25,8 @@ class _ExerciseListItemState extends State<ExerciseListItem> {
     return ListTile(
       onTap: () {
         setState(() {
+          // have to use widget.exercise here bc exercise is defined in ExerciseListItem
+          // but wer are in _ExerciseListItemState, which means we have to reach through widget stuffs
           widget.exercise.increment();
         });
       },
